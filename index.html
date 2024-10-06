@@ -1,15 +1,18 @@
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.js"></script>
     <script src="https://unpkg.com/downloadjs@1.4.7"></script>
     <script src="script.js"></script>
     <link rel="stylesheet" href="styles.css" />
+    <title>Pokemon Deck List Generator</title>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.png" />
   </head>
 
   <body>
     <section class="app">
-      <h1>Pokemon Deck List Generator</h1>
+      <h1 class="title">Pokemon Deck List Generator</h1>
 
       <p>Name</p>
       <input type="text" id="name" name="name" />
@@ -43,7 +46,9 @@
       <textarea id="energy" name="energy"></textarea>
 
       <button onclick="getName()">Generate Form</button>
-      <footer>hi made by matt 2025 ⚡</footer>
+      <footer>
+        <a href="http://www.recoilmatt.com">hi made by matt 2025 ⚡</a>
+      </footer>
     </section>
   </body>
 </html>
