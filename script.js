@@ -7,148 +7,161 @@ function getName() {
   let dob = document.querySelector("#dateOfBirth").value.toString();
   let input = document.querySelector("#decklist").value.toString();
 
-  // Function to parse the input into the desired lists
-  function parseInput(input) {
-    // Extract the Pokémon, Trainer, and Energy sections
-    const pokemonSection = input
-      .split("Trainer:")[0]
-      .replace("Pokémon:", "")
-      .trim();
-    const trainerSection = input
-      .split("Trainer:")[1]
-      .split("Energy:")[0]
-      .trim();
-    const energySection = input.split("Energy:")[1].trim();
+  // Clear any previous error messages
+  document.querySelector("#errorMessage").innerText = "";
 
-    // Split Pokémon entries by newline and filter out empty lines
-    const pokemonEntries = pokemonSection
-      .split("\n")
-      .filter((line) => line.trim() !== "");
-
-    // Use regex to extract the pokemonName and pokemonSet
-    const pokemonRegex = /([A-Z]{3}\s?\d{1,4})/;
-    const pokemonNames = [];
-    const pokemonSets = [];
-
-    pokemonEntries.forEach((entry) => {
-      const match = entry.match(pokemonRegex);
-      if (match) {
-        const pokemonSet = match[0].trim(); // Extract the matched set
-        const pokemonName = entry.replace(pokemonRegex, "").trim(); // Remove the set from the entry to get the name
-        pokemonNames.push(pokemonName);
-        pokemonSets.push(pokemonSet);
-      } else {
-        pokemonNames.push(entry);
-        pokemonSets.push("");
+  try {
+    // Function to parse the input into the desired lists
+    function parseInput(input) {
+      // Validation: Check if input starts with "Pokémon:"
+      if (!input.startsWith("Pokémon:")) {
+        throw new Error("Error. Did you enter the correct format?");
       }
-    });
 
-    // Split Trainer and Energy entries by newline and filter out empty lines
-    const trainerEntries = trainerSection
-      .split("\n")
-      .filter((line) => line.trim() !== "");
-    const energyEntries = energySection
-      .split("\n")
-      .filter((line) => line.trim() !== "");
+      // Extract the Pokémon, Trainer, and Energy sections
+      const pokemonSection = input
+        .split("Trainer:")[0]
+        .replace("Pokémon:", "")
+        .trim();
+      const trainerSection = input
+        .split("Trainer:")[1]
+        .split("Energy:")[0]
+        .trim();
+      const energySection = input.split("Energy:")[1].trim();
 
-    // Regex to extract the first three capital letters followed by four characters
-    const setRegex = /([A-Z]{3}\s?\d{1,4})/;
-    const trainerSet = [];
-    const energySet = [];
-    const trainerNames = [];
-    const energyNames = [];
+      // Split Pokémon entries by newline and filter out empty lines
+      const pokemonEntries = pokemonSection
+        .split("\n")
+        .filter((line) => line.trim() !== "");
 
-    // Clean the trainer entries by extracting the set and names
-    trainerEntries.forEach((entry) => {
-      const match = entry.match(setRegex);
-      if (match) {
-        trainerSet.push(match[0]); // Push the matched set to TrainerSet
-        const trainerName = entry.replace(setRegex, "").trim(); // Extract name by removing the set
-        trainerNames.push(trainerName);
-      } else {
-        trainerSet.push("");
-        trainerNames.push(entry.trim());
-      }
-    });
+      // Use regex to extract the pokemonName and pokemonSet
+      const pokemonRegex = /([A-Z]{3}\s?\d{1,4})/;
+      const pokemonNames = [];
+      const pokemonSets = [];
 
-    // Clean the energy entries by extracting the set and names
-    energyEntries.forEach((entry) => {
-      const match = entry.match(setRegex);
-      if (match) {
-        energySet.push(match[0]); // Push the matched set to EnergySet
-        const energyName = entry.replace(setRegex, "").trim(); // Extract name by removing the set
-        energyNames.push(energyName);
-      } else {
-        energySet.push("");
-        energyNames.push(entry.trim());
-      }
-    });
+      pokemonEntries.forEach((entry) => {
+        const match = entry.match(pokemonRegex);
+        if (match) {
+          const pokemonSet = match[0].trim(); // Extract the matched set
+          const pokemonName = entry.replace(pokemonRegex, "").trim(); // Remove the set from the entry to get the name
+          pokemonNames.push(pokemonName);
+          pokemonSets.push(pokemonSet);
+        } else {
+          pokemonNames.push(entry);
+          pokemonSets.push("");
+        }
+      });
 
-    // Remove entries containing "Total Cards:"
-    energyNames.forEach((entry, index) => {
-      if (entry.includes("Total Cards:")) {
-        energyNames.splice(index, 1); // Remove the entry
-      }
-    });
+      // Split Trainer and Energy entries by newline and filter out empty lines
+      const trainerEntries = trainerSection
+        .split("\n")
+        .filter((line) => line.trim() !== "");
+      const energyEntries = energySection
+        .split("\n")
+        .filter((line) => line.trim() !== "");
 
-    // Remove the first element from each list
-    return {
-      pokemonNames: pokemonNames.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
-      pokemonSets: pokemonSets.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
-      trainerList: trainerEntries.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
-      energyList: energyEntries.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
-      trainerSet: trainerSet.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
-      energySet: energySet.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
-      trainerNames: trainerNames.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
-      energyNames: energyNames.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
-    };
+      // Regex to extract the first three capital letters followed by four characters
+      const setRegex = /([A-Z]{3}\s?\d{1,4})/;
+      const trainerSet = [];
+      const energySet = [];
+      const trainerNames = [];
+      const energyNames = [];
+
+      // Clean the trainer entries by extracting the set and names
+      trainerEntries.forEach((entry) => {
+        const match = entry.match(setRegex);
+        if (match) {
+          trainerSet.push(match[0]); // Push the matched set to TrainerSet
+          const trainerName = entry.replace(setRegex, "").trim(); // Extract name by removing the set
+          trainerNames.push(trainerName);
+        } else {
+          trainerSet.push("");
+          trainerNames.push(entry.trim());
+        }
+      });
+
+      // Clean the energy entries by extracting the set and names
+      energyEntries.forEach((entry) => {
+        const match = entry.match(setRegex);
+        if (match) {
+          energySet.push(match[0]); // Push the matched set to EnergySet
+          const energyName = entry.replace(setRegex, "").trim(); // Extract name by removing the set
+          energyNames.push(energyName);
+        } else {
+          energySet.push("");
+          energyNames.push(entry.trim());
+        }
+      });
+
+      // Remove entries containing "Total Cards:"
+      energyNames.forEach((entry, index) => {
+        if (entry.includes("Total Cards:")) {
+          energyNames.splice(index, 1); // Remove the entry
+        }
+      });
+
+      // Remove the first element from each list
+      return {
+        pokemonNames: pokemonNames.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
+        pokemonSets: pokemonSets.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
+        trainerList: trainerEntries.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
+        energyList: energyEntries.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
+        trainerSet: trainerSet.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
+        energySet: energySet.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
+        trainerNames: trainerNames.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
+        energyNames: energyNames.slice(1).join("\n").replace(/,/g, ""), // Convert to string with line break and remove commas
+      };
+    }
+
+    // Parse the input into the lists
+    const {
+      pokemonNames,
+      pokemonSets,
+      trainerList,
+      energyList,
+      trainerSet,
+      energySet,
+      trainerNames,
+      energyNames,
+    } = parseInput(input);
+
+    // Display the resulting strings
+    console.log("Pokémon Names:\n", pokemonNames);
+    console.log("Pokémon Sets:\n", pokemonSets);
+    console.log("Trainer List:\n", trainerList);
+    console.log("Energy List:\n", energyList);
+    console.log("Trainer Set:\n", trainerSet);
+    console.log("Energy Set:\n", energySet);
+    console.log("Trainer Names:\n", trainerNames);
+    console.log("Energy Names:\n", energyNames);
+
+    // Get the dropdown element and access the value prop
+
+    let dropdown = document.getElementById("division");
+    let selectedDivision = dropdown.value;
+
+    const playerName = name;
+    const playerId = id;
+    const dateOfBirth = dob;
+    const pokemonNameEntry = pokemonNames;
+    const pokemonSetEntry = pokemonSets;
+    const trainersEntry = trainerNames;
+    const energyEntry = energyNames;
+
+    fillForm(
+      playerName,
+      playerId,
+      dateOfBirth,
+      selectedDivision,
+      pokemonNameEntry,
+      pokemonSetEntry,
+      trainersEntry,
+      energyEntry
+    );
+  } catch (error) {
+    // Display the error message in the HTML
+    document.querySelector("#errorMessage").innerText = error.message;
   }
-
-  // Parse the input into the lists
-  const {
-    pokemonNames,
-    pokemonSets,
-    trainerList,
-    energyList,
-    trainerSet,
-    energySet,
-    trainerNames,
-    energyNames,
-  } = parseInput(input);
-
-  // Display the resulting strings
-  console.log("Pokémon Names:\n", pokemonNames);
-  console.log("Pokémon Sets:\n", pokemonSets);
-  console.log("Trainer List:\n", trainerList);
-  console.log("Energy List:\n", energyList);
-  console.log("Trainer Set:\n", trainerSet);
-  console.log("Energy Set:\n", energySet);
-  console.log("Trainer Names:\n", trainerNames);
-  console.log("Energy Names:\n", energyNames);
-
-  // Get the dropdown element and access the value prop
-
-  let dropdown = document.getElementById("division");
-  let selectedDivision = dropdown.value;
-
-  const playerName = name;
-  const playerId = id;
-  const dateOfBirth = dob;
-  const pokemonNameEntry = pokemonNames;
-  const pokemonSetEntry = pokemonSets;
-  const trainersEntry = trainerNames;
-  const energyEntry = energyNames;
-
-  fillForm(
-    playerName,
-    playerId,
-    dateOfBirth,
-    selectedDivision,
-    pokemonNameEntry,
-    pokemonSetEntry,
-    trainersEntry,
-    energyEntry
-  );
 }
 
 async function fillForm(
