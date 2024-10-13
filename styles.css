@@ -47,6 +47,13 @@ input {
   -webkit-appearance: none;
   appearance: none;
   resize: none;
+  text-align: left; /* Left align text and placeholder */
+}
+
+/* Style for the placeholder text */
+::placeholder {
+  text-align: left; /* Left align placeholder text */
+  color: #888; /* Placeholder color */
 }
 
 select {
