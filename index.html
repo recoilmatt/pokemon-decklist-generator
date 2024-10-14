@@ -2,10 +2,30 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
+
+    <!--Scripts-->
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.js"></script>
     <script src="https://unpkg.com/downloadjs@1.4.7"></script>
     <script src="script.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-441NQ746ZE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-441NQ746ZE");
+    </script>
+
+    <!--Styles-->
     <link rel="stylesheet" href="styles.css" />
+    <!--Title-->
     <title>Pokemon Deck List Generator</title>
     <!--Favicons-->
     <link
@@ -51,6 +71,8 @@
       <button id="parseInput" onclick="getName()">Generate form</button>
       <footer>
         <a href="http://www.mattlai.com">hi made by matt 2025 ⚡</a>
+        <br />
+        <a href="https://ko-fi.com/recoilmatt">support my pokemon addiction</a>
       </footer>
     </section>
   </body>
