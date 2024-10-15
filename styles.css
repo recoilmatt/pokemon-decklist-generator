@@ -1,6 +1,6 @@
 body {
   width: 100vw;
-  padding-top: 10%;
+  height: 90vh;
   margin: 0;
   display: flex;
   justify-content: center;
@@ -8,8 +8,20 @@ body {
   background-color: #f6f6f6;
 }
 
+.app {
+  border-radius: 8px;
+  box-shadow: 0 1px 2px #1018280d;
+  padding: 32px 32px;
+  background: #ffffffe6;
+}
 h1 {
   font-family: helvetica;
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5rem; /* Smaller size when the viewport width is 600px or less */
+  }
 }
 
 p {
@@ -21,7 +33,7 @@ footer {
   display: flex;
   font-family: helvetica;
   font-size: 10px;
-  padding: 32px;
+  padding-top: 24px;
   justify-content: center;
 }
 
@@ -110,4 +122,11 @@ textarea {
 a {
   color: #585858;
   text-decoration: none;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
