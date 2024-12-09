@@ -15,7 +15,7 @@ function getName() {
     function parseInput(input) {
       // Validation: Check if input starts with "Pokémon:"
       if (!input.startsWith("Pokémon:")) {
-        throw new Error("Error. Did you enter the correct format?");
+        throw new Error("Error! Did you paste the correct formatted list?");
       }
 
       // Extract the Pokémon, Trainer, and Energy sections
