@@ -1,4 +1,26 @@
 const { PDFDocument } = PDFLib;
+document.addEventListener("DOMContentLoaded", function () {
+  // Get the modal button
+  const openModalBtn = document.getElementById("openModalBtn");
+
+  if (openModalBtn) {
+    openModalBtn.addEventListener("click", function (event) {
+      event.preventDefault(); // Prevent default link behavior
+      openModal(); // Call the modal function
+    });
+  }
+
+  // Function to open the modal
+  function openModal() {
+    const modal = document.getElementById("myModal");
+    modal.style.display = "block";
+
+    const closeModalBtn = document.getElementsByClassName("close")[0];
+    closeModalBtn.addEventListener("click", function () {
+      modal.style.display = "none";
+    });
+  }
+});
 
 // Get the text field information
 function getName() {
@@ -35,7 +57,7 @@ function getName() {
         .filter((line) => line.trim() !== "");
 
       // Use regex to extract the pokemonName and pokemonSet
-      const pokemonRegex = /([A-Z]{3}\s?\d{1,4})/;
+      const pokemonRegex = /([A-Z]{3}\s?\d{1,4}|[PR-]{3}\s?\d{1,4})/;
       const pokemonNames = [];
       const pokemonSets = [];
 

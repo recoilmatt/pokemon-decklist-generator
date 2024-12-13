@@ -4,9 +4,12 @@
     <meta charset="utf-8" />
 
     <!--Scripts-->
+    
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.js"></script>
     <script src="https://unpkg.com/downloadjs@1.4.7"></script>
     <script src="script.js"></script>
+    
+
 
     <!-- Google tag (gtag.js) -->
     <script
@@ -22,7 +25,7 @@
 
       gtag("config", "G-441NQ746ZE");
     </script>
-
+    
     <!--Styles-->
     <link rel="stylesheet" href="styles.css" />
     <!--Title-->
@@ -73,8 +76,25 @@
       <footer>
         <div class="links">
           <div>Updated to Surging Sparks</div>
-                  <div>Share this with your friends!</div>
-          <br>
+                
+          
+          <!-- Link that triggers the modal -->
+
+      <a href="#" id="openModalBtn" onclick="openModal()">Share with your friends!</a>
+
+        <!-- Modal structure -->
+        <div id="myModal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>
+              <img src="assets\qr.png">
+              <br>
+              Scan this QR to share with your friends.
+            </p>
+          </div>
+        </div>
+
+
         <div><a href="http://www.mattlai.com">hi made by matt 2025 ⚡</a></div>
         <div>
           <a href="https://paypal.me/recoilmatt?country.x=US&locale.x=en_US"
@@ -83,5 +103,6 @@
         </div>
       </footer>
     </section>
+   
   </body>
 </html>
