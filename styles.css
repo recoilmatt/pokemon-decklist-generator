@@ -19,9 +19,18 @@ h1 {
 }
 
 @media (max-width: 600px) {
-  h1 {
-    font-size: 1.5rem; /* Smaller size when the viewport width is 600px or less */
+  .app {
+    width: 100vw;
+    height: 100%;
   }
+
+  body {
+    height: 100vh;
+  }
+}
+
+h1 {
+  font-size: 1.5rem; /* Smaller size when the viewport width is 600px or less */
 }
 
 p {

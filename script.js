@@ -57,7 +57,7 @@ function getName() {
         .filter((line) => line.trim() !== "");
 
       // Use regex to extract the pokemonName and pokemonSet
-      const pokemonRegex = /([A-Z]{3}\s?\d{1,4}|[PR-]{3}\s?\d{1,4})/;
+      const pokemonRegex = /([A-Z]{3}\s?\d{1,4}|PR-.{2}\s?\d{1,4})/;
       const pokemonNames = [];
       const pokemonSets = [];
 
@@ -235,8 +235,8 @@ async function fillForm(
   }
 
   // Sets font size for fields
-  pokemonNameField.setFontSize(8);
-  pokemonSetField.setFontSize(8);
+  pokemonNameField.setFontSize(7);
+  pokemonSetField.setFontSize(7);
   trainersField.setFontSize(8);
   energyField.setFontSize(6);
 
