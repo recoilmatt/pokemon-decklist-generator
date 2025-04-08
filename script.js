@@ -216,8 +216,8 @@ async function fillForm(
   const energyField = form.getTextField("Energy");
 
   // Get the selection of the format and select it
-  const formatBox = form.getCheckBox("Standard");
-  formatBox.check();
+  //const formatBox = form.getCheckBox("Standard");
+  //formatBox.check();
 
   // Get the selection of the division
   const mastersBox = form.getCheckBox("Masters");
