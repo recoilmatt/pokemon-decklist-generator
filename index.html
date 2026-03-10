@@ -4,106 +4,188 @@
     <meta charset="utf-8" />
 
     <!--Scripts-->
-    
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.js"></script>
     <script src="https://unpkg.com/downloadjs@1.4.7"></script>
     <script src="script.js"></script>
-    
-
 
     <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-441NQ746ZE"
-    ></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-441NQ746ZE"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
+      function gtag() { dataLayer.push(arguments); }
       gtag("js", new Date());
-
       gtag("config", "G-441NQ746ZE");
     </script>
-    
+
+    <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <!--Styles-->
     <link rel="stylesheet" href="styles.css" />
     <!--Title-->
-    <title>Pokemon Deck List Generator</title>
+    <title>Pokemon Tools</title>
     <!--Favicons-->
-    <link
-      rel="icon"
-      href="/pokemon-decklist-generator/assets/favicon.ico"
-      sizes="32x32"
-      type="image/ico"
-    />
+    <link rel="icon" href="/pokemon-decklist-generator/assets/favicon.ico" sizes="32x32" type="image/ico" />
   </head>
 
   <body>
-    <section class="app">
-      <h1>Pokemon Deck List Generator</h1>
+    <div class="layout">
 
-      <p>Name</p>
-      <input type="text" id="name" name="name" autocomplete="name" />
-      <p>Player ID</p>
-      <input type="text" id="playerId" name="playerId" autocomplete="on" />
-      <p>Date of Birth</p>
-      <input
-        type="text"
-        id="dateOfBirth"
-        name="dateOfBirth"
-        autocomplete="bday"
-        placeholder="mm / dd / yyyy"
-      />
-
-      <p>Division</p>
-      <select name="division" id="division">
-        <option value="Masters">Masters</option>
-        <option value="Senior">Senior</option>
-        <option value="Junior">Junior</option>
-      </select>
-
-      <p>Deck List</p>
-      <textarea
-        id="decklist"
-        name="decklist"
-        placeholder="Paste directly from PTCGL / Limitless export"
-      ></textarea>
-      <div id="errorMessage"></div>
-      <!-- Error message will be displayed here -->
-
-      <button id="parseInput" onclick="getName()">Generate form</button>
-
-      <footer>
-        <div class="links">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">Pokemon Tools</div>
+        <nav class="sidebar-nav">
+          <button class="nav-btn active" id="navDeck" onclick="showTool('deck')">
+            Deck List Generator
+          </button>
+          <button class="nav-btn" id="navTeam" onclick="showTool('team')">
+            Team Generator
+          </button>
+        </nav>
+<div class="sidebar-footer">
           <div>Updated for Journey Together</div>
-                
-          
-          <!-- Link that triggers the modal -->
-
-      <a href="#" id="openModalBtn" onclick="openModal()">Share with your friends!</a>
-
-        <!-- Modal structure -->
-        <div id="myModal" class="modal">
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>
-              <img src="assets\qr.png">
-              <br>
-              Scan this QR to share with your friends.
-            </p>
+          <a href="#" id="openModalBtn">Share with friends!</a>
+          <div><a href="http://www.mattlai.com">hi made by matt 2025 ⚡</a></div>
+          <div>
+            <a href="https://paypal.me/recoilmatt?country.x=US&locale.x=en_US">support my pokemon addiction</a>
           </div>
         </div>
+      </aside>
 
+      <!-- Main Content -->
+      <div class="main-content">
 
-        <div><a href="http://www.mattlai.com">hi made by matt 2025 ⚡</a></div>
-        <div>
-          <a href="https://paypal.me/recoilmatt?country.x=US&locale.x=en_US"
-            >support my pokemon addiction</a
-          >
-        </div>
-      </footer>
-    </section>
-   
+        <!-- Deck List Generator -->
+        <section id="toolDeck" class="tool-section app">
+          <h1>Pokemon Deck List Generator</h1>
+
+          <div class="mode-toggle">
+            <button class="toggle-btn active" id="btnGenerator" onclick="setMode('generator')">Generator</button>
+            <button class="toggle-btn" id="btnManual" onclick="setMode('manual')">Manual</button>
+          </div>
+
+          <div id="generatorSection">
+            <div class="manual-stack">
+              <div class="manual-field">
+                <p>Name</p>
+                <input type="text" id="name" name="name" autocomplete="name" />
+              </div>
+              <div class="manual-field">
+                <p>Player ID</p>
+                <input type="text" id="playerId" name="playerId" autocomplete="off" />
+              </div>
+              <div class="manual-field">
+                <p>Date of Birth</p>
+                <div class="datepicker-wrap" id="dpWrap_dateOfBirth">
+                  <input type="text" id="dateOfBirth" name="dateOfBirth" autocomplete="off" placeholder="MM/DD/YYYY" readonly class="datepicker-input" />
+                  <div class="datepicker-popover" id="dpPop_dateOfBirth"></div>
+                </div>
+              </div>
+              <div class="manual-field">
+                <p>Division</p>
+                <select name="division" id="division">
+                  <option value="Masters">Masters</option>
+                  <option value="Senior">Senior</option>
+                  <option value="Junior">Junior</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div id="manualSection" style="display:none;">
+            <!-- Player info for manual mode -->
+            <div class="manual-stack">
+              <div class="manual-field">
+                <p>Name</p>
+                <input type="text" id="manualName" autocomplete="name" />
+              </div>
+              <div class="manual-field">
+                <p>Player ID</p>
+                <input type="text" id="manualPlayerId" />
+              </div>
+              <div class="manual-field">
+                <p>Date of Birth</p>
+                <div class="datepicker-wrap" id="dpWrap_manualDob">
+                  <input type="text" id="manualDob" autocomplete="off" placeholder="MM/DD/YYYY" readonly class="datepicker-input" />
+                  <div class="datepicker-popover" id="dpPop_manualDob"></div>
+                </div>
+              </div>
+              <div class="manual-field">
+                <p>Division</p>
+                <select id="manualDivision">
+                  <option value="Masters">Masters</option>
+                  <option value="Senior">Senior</option>
+                  <option value="Junior">Junior</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Card Search -->
+            <p class="section-label">Card Search</p>
+            <div class="search-row">
+              <input type="text" id="cardSearch" placeholder="Search cards by name..." oninput="debouncedSearch()" onkeydown="if(event.key==='Enter') searchCards()" />
+              <button class="btn-inline" onclick="searchCards()">Search</button>
+            </div>
+            <div id="searchResults" class="search-results"></div>
+
+            <!-- Deck Builder -->
+            <div class="deck-builder-header">
+              <p class="section-label">Your Deck</p>
+              <span id="deckCount" class="deck-count">0 / 60</span>
+            </div>
+            <div id="deckList" class="deck-list">
+              <div class="deck-empty">Search for cards and add them to your deck.</div>
+            </div>
+            <div id="deckError" class="deck-error"></div>
+            <button onclick="generateFromManual()">Generate PDF</button>
+          </div>
+
+          <div id="deckListSection">
+            <p class="section-label">Deck List</p>
+            <textarea id="decklist" name="decklist" placeholder="Paste directly from PTCGL / Limitless export"></textarea>
+            <div id="errorMessage"></div>
+            <button id="parseInput" onclick="getName()">Generate form</button>
+          </div>
+        </section>
+
+        <!-- Team Generator -->
+        <section id="toolTeam" class="tool-section app" style="display:none;">
+          <h1>Pokemon Team Generator</h1>
+
+          <div class="team-controls">
+            <div class="team-search-row">
+              <input
+                type="text"
+                id="pokemonSearch"
+                placeholder="Search Pokemon by name..."
+                onkeydown="if(event.key==='Enter') addPokemonToTeam()"
+              />
+              <button class="btn-add" onclick="addPokemonToTeam()">Add</button>
+            </div>
+            <div class="team-btn-row">
+              <button onclick="randomTeam()">Random Team</button>
+              <button class="btn-danger" onclick="clearTeam()">Clear</button>
+            </div>
+          </div>
+
+          <div id="teamError" class="team-error"></div>
+          <div id="teamGrid" class="team-grid"></div>
+        </section>
+
+      </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>
+          <img src="assets\qr.png" alt="QR Code" />
+          <br />
+          Scan this QR to share with your friends.
+        </p>
+      </div>
+    </div>
   </body>
 </html>
